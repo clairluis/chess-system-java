@@ -5,9 +5,9 @@ import boardgame.Position;
 import chess.ChessPiece;
 import chess.Colour;
 
-public class Rook extends ChessPiece{
+public class Bishop extends ChessPiece{
 
-	public Rook(Board board, Colour colour) {
+	public Bishop(Board board, Colour colour) {
 		super(board, colour);
 	}
 	
@@ -17,48 +17,48 @@ public class Rook extends ChessPiece{
 		
 		Position pos = new Position(0,0);
 		
-		//above
-		pos.setValues(position.getRow() - 1, position.getColumn());
+		//nw
+		pos.setValues(position.getRow() - 1, position.getColumn() - 1);
 		
 		while(getBoard().positionExists(pos) && !getBoard().isThereAPiece(pos)) {
 			mat[pos.getRow()][pos.getColumn()] = true;
-			pos.setRow(pos.getRow() - 1);
+			pos.setValues(pos.getRow() - 1, pos.getColumn() - 1);
 		}
 		
 		if(getBoard().positionExists(pos) && isThereOpponentPiece(pos)) {
 			mat[pos.getRow()][pos.getColumn()] = true;
 		}
 		
-		//left
-		pos.setValues(position.getRow(), position.getColumn() - 1);
+		//ne
+		pos.setValues(position.getRow() - 1, position.getColumn() + 1);
 		
 		while(getBoard().positionExists(pos) && !getBoard().isThereAPiece(pos)) {
 			mat[pos.getRow()][pos.getColumn()] = true;
-			pos.setColumn(pos.getColumn() - 1);
+			pos.setValues(pos.getRow() - 1, pos.getColumn() + 1);
 		}
 		
 		if(getBoard().positionExists(pos) && isThereOpponentPiece(pos)) {
 			mat[pos.getRow()][pos.getColumn()] = true;
 		}
 		
-		//right
-		pos.setValues(position.getRow(), position.getColumn() + 1);
+		//se
+		pos.setValues(position.getRow() + 1, position.getColumn() + 1);
 		
 		while(getBoard().positionExists(pos) && !getBoard().isThereAPiece(pos)) {
 			mat[pos.getRow()][pos.getColumn()] = true;
-			pos.setColumn(pos.getColumn() + 1);
+			pos.setValues(pos.getRow() + 1, pos.getColumn() + 1);
 		}
 		
 		if(getBoard().positionExists(pos) && isThereOpponentPiece(pos)) {
 			mat[pos.getRow()][pos.getColumn()] = true;
 		}
 		
-		//below
-		pos.setValues(position.getRow() + 1, position.getColumn());
+		//sw
+		pos.setValues(position.getRow() + 1, position.getColumn() - 1);
 		
 		while(getBoard().positionExists(pos) && !getBoard().isThereAPiece(pos)) {
 			mat[pos.getRow()][pos.getColumn()] = true;
-			pos.setRow(pos.getRow() + 1);
+			pos.setValues(pos.getRow() + 1, pos.getColumn() - 1);
 		}
 		
 		if(getBoard().positionExists(pos) && isThereOpponentPiece(pos)) {
@@ -70,7 +70,7 @@ public class Rook extends ChessPiece{
 	
 	@Override
 	public String toString(){
-		return "R";
+		return "B";
 	}
-	
+
 }
