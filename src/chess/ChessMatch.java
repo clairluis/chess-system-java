@@ -31,6 +31,14 @@ public class ChessMatch {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
 	}
 	
+	public boolean[][] possibleMoves(ChessPosition sourcePosition){
+		Position position = sourcePosition.toPosition();
+		
+		validateSourcePosition(position);
+		
+		return board.piece(position).possibleMoves();
+	}
+	
 	public ChessPiece performChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
 		Position source = sourcePosition.toPosition();
 		Position target = targetPosition.toPosition();
@@ -68,7 +76,7 @@ public class ChessMatch {
 		
 		return capturedPiece;
 	}
-
+	
 	private void initialSetup() {
 		placeNewPiece('c', 1, new Rook(board, Colour.WHITE));
         placeNewPiece('c', 2, new Rook(board, Colour.WHITE));
