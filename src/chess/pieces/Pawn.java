@@ -2,13 +2,17 @@ package chess.pieces;
 
 import boardgame.Board;
 import boardgame.Position;
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.Colour;
 
 public class Pawn extends ChessPiece{
+	
+	private ChessMatch chessMatch;
 
-	public Pawn(Board board, Colour colour) {
+	public Pawn(Board board, Colour colour, ChessMatch chessMatch) {
 		super(board, colour);
+		this.chessMatch = chessMatch;
 	}
 
 	@Override
@@ -48,6 +52,19 @@ public class Pawn extends ChessPiece{
 				mat[pos.getRow()][pos.getColumn()] = true;
 			}
 			
+			// special move en passant white
+			if(position.getRow() == 3) {
+				Position left = new Position(position.getRow(), position.getColumn() - 1);
+				if(getBoard().positionExists(left) && isThereOpponentPiece(left) && getBoard().piece(left) == chessMatch.getEnPassantVulnerable()) {
+					mat[left.getRow() - 1][left.getColumn()] = true;
+				}
+				
+				Position right = new Position(position.getRow(), position.getColumn() + 1);
+				if(getBoard().positionExists(right) && isThereOpponentPiece(right) && getBoard().piece(right) == chessMatch.getEnPassantVulnerable()) {
+					mat[right.getRow() - 1][right.getColumn()] = true;
+				}
+			}
+			
 		} else {
 			//black pawn moves always one square to the front
 			pos.setValues(position.getRow() + 1, position.getColumn());
@@ -77,6 +94,19 @@ public class Pawn extends ChessPiece{
 			
 			if(getBoard().positionExists(pos) && isThereOpponentPiece(pos)) {
 				mat[pos.getRow()][pos.getColumn()] = true;
+			}
+			
+			// special move en passant black
+			if(position.getRow() == 4) {
+				Position left = new Position(position.getRow(), position.getColumn() - 1);
+				if(getBoard().positionExists(left) && isThereOpponentPiece(left) && getBoard().piece(left) == chessMatch.getEnPassantVulnerable()) {
+					mat[left.getRow() + 1][left.getColumn()] = true;
+				}
+				
+				Position right = new Position(position.getRow(), position.getColumn() + 1);
+				if(getBoard().positionExists(right) && isThereOpponentPiece(right) && getBoard().piece(right) == chessMatch.getEnPassantVulnerable()) {
+					mat[right.getRow() + 1][right.getColumn()] = true;
+				}
 			}
 		}
 		
